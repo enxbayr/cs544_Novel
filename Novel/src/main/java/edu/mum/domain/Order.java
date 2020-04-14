@@ -11,7 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -20,18 +19,18 @@ import javax.persistence.Version;
 @Entity
 @Table(name = "Order")
 public class Order {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", updatable = false, nullable = false)
-	private Long id = null;
-	@Version
-	@Column(name = "version")
-	private int version = 0;
+	  @Id
+	   @GeneratedValue(strategy = GenerationType.IDENTITY)
+	   @Column(name = "id", updatable = false, nullable = false)
+	   private Long id = null;
+	   @Version
+	   @Column(name = "version")
+	   private int version = 0;
 
-	@Column
-	private String orderNumber;
-
-	public OrderStatus getOrderStatus() {
+	   @Column
+	   private String orderNumber;
+	   
+	   public OrderStatus getOrderStatus() {
 		return orderStatus;
 	}
 
@@ -48,24 +47,17 @@ public class Order {
 	}
 
 	@Column
-	private OrderStatus orderStatus;
+	   private OrderStatus orderStatus;
+	   
+	   @Column
+	   private LocalDate orderDate;
+	   
+	   @Column
+	   @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	   private User user;
 
-<<<<<<< HEAD
 	   @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	   private List<OrderItem> items = new ArrayList<OrderItem>();
-=======
-	@Column
-	private LocalDate orderDate;
-
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	//(optional = false, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinColumn(name = "id")
-	private User user;
-
-	@OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	private Set<OrderItem> items = new HashSet<OrderItem>();
->>>>>>> branch 'master' of https://github.com/enxbayr/cs544_Novel.git
 
 	public Long getId() {
 		return id;
@@ -98,7 +90,7 @@ public class Order {
 	public void setItems(List<OrderItem> items) {
 		this.items = items;
 	}
-
+	
 	public void addOrderItem(OrderItem orderItem) {
 		this.items.add(orderItem);
 		orderItem.setOrder(this);
