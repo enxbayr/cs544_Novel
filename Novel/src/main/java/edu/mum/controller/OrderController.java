@@ -30,6 +30,7 @@ import edu.mum.service.OrderService;
 @RequestMapping("/orders")
 public class OrderController {
 	
+<<<<<<< HEAD
 	@Autowired
 	private OrderService orderService;
 	
@@ -40,7 +41,10 @@ public class OrderController {
 	public List<Order> list(Model model) {
 		return  orderService.getAll();
 	}
+=======
+>>>>>>> branch 'master' of https://github.com/enxbayr/cs544_Novel.git
 	
+<<<<<<< HEAD
  	@RequestMapping("/{id}")
 	public Order getOrderById( @PathVariable("id") String orderNum) {
 
@@ -58,6 +62,8 @@ public class OrderController {
 			orderService.save(orderToBeAdded);
  
 	}
+=======
+>>>>>>> branch 'master' of https://github.com/enxbayr/cs544_Novel.git
 	
    
 }

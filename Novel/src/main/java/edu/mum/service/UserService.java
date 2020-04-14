@@ -24,6 +24,6 @@ public interface UserService {
 
 	public List<User> findAllJoinFetch();
 
-	public List<User> findByGraph();
+	// public List<User> findByGraph();
 
 }

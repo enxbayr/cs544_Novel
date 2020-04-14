@@ -50,8 +50,8 @@ public class UserCredentials {
 // 	@JsonBackReference()          // works with JsonManagedReference in Member
 	private User user;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "userCredentials")
-	// @JoinColumn(name="credentials_id")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="userCredentials")
+	//@JoinColumn(name="credentials_id")
 	List<Authority> authority = new ArrayList<Authority>();
 
 	public String getUsername() {
