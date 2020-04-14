@@ -54,6 +54,7 @@ public class OrderItem {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+
 	}
 
 	public Order getOrder() {
