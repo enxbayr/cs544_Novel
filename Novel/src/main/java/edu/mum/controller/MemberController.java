@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.mum.service.MemberService;
+import edu.mum.service.UserService;
 import edu.mum.domain.User;
 
 @RestController
@@ -27,7 +27,7 @@ import edu.mum.domain.User;
 public class MemberController {
 	
 	@Autowired
-	private MemberService  memberService;
+	private UserService  memberService;
 
 	@RequestMapping("")
 	public List<User>  findAll( ) {
