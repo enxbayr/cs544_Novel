@@ -27,9 +27,6 @@ public class OrderItem {
 	@ManyToOne
 	private Order order;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	private Menu product;
-
 	public Long getId() {
 		return id;
 	}
@@ -52,6 +49,7 @@ public class OrderItem {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+
 	}
 
 	public Order getOrder() {
@@ -60,14 +58,6 @@ public class OrderItem {
 
 	public void setOrder(Order order) {
 		this.order = order;
-	}
-
-	public Menu getProduct() {
-		return product;
-	}
-
-	public void setProduct(Menu product) {
-		this.product = product;
 	}
 
 }
