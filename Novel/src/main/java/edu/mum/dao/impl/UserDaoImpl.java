@@ -30,12 +30,12 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
 
 	}
 
-	public List<User> findByGraph() {
-
-		EntityGraph graph = entityManager.getEntityGraph("graph.User.addresses");
-
-		return (List<User>) this.findAll("javax.persistence.fetchgraph", graph);
-
-	}
+//	public List<User> findByGraph() {
+//
+//		EntityGraph graph = entityManager.getEntityGraph("graph.User.addresses");
+//
+//		return (List<User>) this.findAll("javax.persistence.fetchgraph", graph);
+//
+//	}
 
 }

@@ -15,46 +15,44 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.mum.service.MemberService;
+import edu.mum.service.UserService;
 import edu.mum.domain.User;
 
 @RestController
-@RequestMapping({"/members"})
+@RequestMapping({ "/users" })
 public class UserController {
-	
+
 	@Autowired
-	private MemberService  memberService;
+	private UserService userService;
 
 	@RequestMapping("")
-	public List<User>  findAll( ) {
-		List<User> memberList = memberService.findAll();
-		return  memberList;
- 
+	public List<User> findAll() {
+		List<User> userList = userService.findAll();
+		return userList;
+
 	}
-	
+
 	@RequestMapping("addresses")
-	public List<User>  findAllAddress( ) {
-		List<User> memberList = memberService.findAllAddress();
-		return  memberList;
- 
+	public List<User> findAllAddress() {
+		List<User> userList = userService.findAllAddress();
+		return userList;
+
 	}
-	
-  	@RequestMapping("/{id}")
+
+	@RequestMapping("/{id}")
 	public User getMemberById(@PathVariable("id") Long id) {
-		return   memberService.findOne(id);
- 
+		return userService.findOne(id);
+
 	}
-	   
+
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public void processAddNewMemberForm(@RequestBody User memberToBeAdded) {
-		memberService.save(memberToBeAdded);
- 
+		userService.save(memberToBeAdded);
+
 	}
-	
- 
+
 }

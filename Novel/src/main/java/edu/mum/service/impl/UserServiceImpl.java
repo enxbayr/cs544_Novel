@@ -64,10 +64,9 @@ public class UserServiceImpl implements edu.mum.service.UserService {
 		return userDao.findAllJoinFetch();
 	}
 
-	@Override
-	public List<User> findByGraph() {
-		return userDao.findByGraph();
-	}
+	/*
+	 * @Override public List<User> findByGraph() { return userDao.findByGraph(); }
+	 */
 
 	@Override
 	public User findByUserNumber(Integer userId) {

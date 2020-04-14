@@ -26,35 +26,7 @@ import edu.mum.service.ProductService;
 @RequestMapping("/orders")
 public class OrderController {
 	
-	@Autowired
-	private OrderService orderService;
- 
- 	@RequestMapping("")
-	public List<Menu> list(Model model) {
-		return  productService.getAllProducts();
- 
-	}
 	
- 	@RequestMapping("/{id}")
-	public Menu getProductById( @PathVariable("id") Long productId) {
-
-		return productService.get(productId);
- 	}
-
- 	@RequestMapping("/{id}/category")
-	public Menu getByIdWithCategory( @PathVariable("id") Long productId) {
-
-		return productService.getWithCategory(productId);
- 	}
-
-	   
-	@RequestMapping(value = "", method = RequestMethod.POST)
-	@ResponseStatus(value = HttpStatus.NO_CONTENT)
-	public void processAddNewProductForm(@RequestBody Menu productToBeAdded ) {
-
-			productService.addProduct(productToBeAdded);
- 
-	}
 	
    
 }

@@ -1,10 +1,14 @@
 package edu.mum.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -21,6 +25,10 @@ public class Authority {
 
 	@Column(nullable = false)
 	private String authority;
+
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "credentials_id")
+	private UserCredentials userCredentials;
 
 	public long getId() {
 		return id;
@@ -44,6 +52,14 @@ public class Authority {
 
 	public void setAuthority(String authority) {
 		this.authority = authority;
+	}
+
+	public UserCredentials getUserCredentials() {
+		return userCredentials;
+	}
+
+	public void setUserCredentials(UserCredentials userCredentials) {
+		this.userCredentials = userCredentials;
 	}
 
 }

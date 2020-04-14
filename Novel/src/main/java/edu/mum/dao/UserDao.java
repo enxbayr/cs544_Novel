@@ -10,5 +10,5 @@ public interface UserDao extends GenericDao<User> {
 
 	public List<User> findAllJoinFetch();
 
-	public List<User> findByGraph();
+	// public List<User> findByGraph();
 }

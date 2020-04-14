@@ -79,6 +79,8 @@ public class User {
 	// @JsonManagedReference()
 	@Valid
 	private List<Address> addresses = new ArrayList<Address>();
+	
+	
 
 	public long getId() {
 		return id;
