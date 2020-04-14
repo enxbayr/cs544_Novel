@@ -23,11 +23,11 @@ import edu.mum.domain.Menu;
 import edu.mum.service.ProductService;
 
 @RestController
-@RequestMapping("/products")
-public class ProductController {
+@RequestMapping("/orders")
+public class OrderController {
 	
 	@Autowired
-	private ProductService productService;
+	private OrderService orderService;
  
  	@RequestMapping("")
 	public List<Menu> list(Model model) {

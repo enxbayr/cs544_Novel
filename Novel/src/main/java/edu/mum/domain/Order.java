@@ -1,5 +1,6 @@
 package edu.mum.domain;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,21 +11,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedAttributeNode;
-import javax.persistence.NamedEntityGraph;
-import javax.persistence.NamedSubgraph;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
 @Entity
-@Table(name = "purchaseOrder")
-@NamedEntityGraph(name = "graph.Order.items", 
-               attributeNodes = { @NamedAttributeNode(value = "items", subgraph = "items"),
-            		   @NamedAttributeNode(value = "payments")} ,
-               subgraphs = @NamedSubgraph(name = "items", 
-               				attributeNodes = @NamedAttributeNode("product")))
-
+@Table(name = "Order")
 public class Order {
 	  @Id
 	   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,9 +30,30 @@ public class Order {
 	   @Column
 	   private String orderNumber;
 	   
-	   @Column
+	   public OrderStatus getOrderStatus() {
+		return orderStatus;
+	}
+
+	public LocalDate getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderStatus(OrderStatus orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+
+	public void setOrderDate(LocalDate orderDate) {
+		this.orderDate = orderDate;
+	}
+
+	@Column
 	   private OrderStatus orderStatus;
 	   
+	   @Column
+	   private LocalDate orderDate;
+	   
+	   @Column
+	   @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	   private User user;
 
 	   @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })

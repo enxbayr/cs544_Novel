@@ -24,7 +24,7 @@ import edu.mum.domain.User;
 
 @RestController
 @RequestMapping({"/members"})
-public class MemberController {
+public class UserController {
 	
 	@Autowired
 	private MemberService  memberService;

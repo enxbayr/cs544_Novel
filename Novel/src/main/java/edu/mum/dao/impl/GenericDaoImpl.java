@@ -1,16 +1,9 @@
 package edu.mum.dao.impl;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import edu.mum.dao.GenericDao;
-import edu.mum.dao.MemberDao;
-
 
 /*@SuppressWarnings("unchecked")
 @Repository*/
@@ -56,12 +49,4 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
 	public T update( T entity ){
 	      return entityManager.merge( entity );
 	   }
-
- 	@Override
-	public List<T> findAll(String s,Object  hint ){
- 	    return (List<T>)  entityManager.createQuery("SELECT m FROM Member AS m") 
- 	    		.setHint(s,hint).getResultList();
-  	}
-	
-
  }
