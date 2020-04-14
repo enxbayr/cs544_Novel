@@ -1,8 +1,8 @@
 package edu.mum.domain;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -57,7 +57,7 @@ public class Order {
 	   private User user;
 
 	   @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	   private Set<OrderItem> items = new HashSet<OrderItem>();
+	   private List<OrderItem> items = new ArrayList<OrderItem>();
 
 	public Long getId() {
 		return id;
@@ -83,11 +83,11 @@ public class Order {
 		this.orderNumber = orderNumber;
 	}
 
-	public Set<OrderItem> getItems() {
+	public List<OrderItem> getItems() {
 		return items;
 	}
 
-	public void setItems(Set<OrderItem> items) {
+	public void setItems(List<OrderItem> items) {
 		this.items = items;
 	}
 	

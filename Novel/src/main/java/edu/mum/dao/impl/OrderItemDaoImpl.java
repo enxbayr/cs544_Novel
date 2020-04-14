@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
-import edu.mum.domain.Order;
 import edu.mum.domain.OrderItem;
 import edu.mum.dao.OrderItemDao;
 
@@ -20,8 +19,8 @@ public class OrderItemDaoImpl extends GenericDaoImpl<OrderItem> implements Order
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<OrderItem> getOrderItemByOrder(Order order) {
-		Query query = entityManager.createQuery("select p from OrderItem p where p.order = :order");
-		return (List<OrderItem>) query.setParameter("order", order).getResultList();
+	public List<OrderItem> getOrderItemByOrder(Long id) {
+		Query query = entityManager.createQuery("select p from OrderItem p where p.order.id = :id");
+		return (List<OrderItem>) query.setParameter("id", id).getResultList();
 	}
 }

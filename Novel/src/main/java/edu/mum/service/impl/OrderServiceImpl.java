@@ -19,56 +19,44 @@ public class OrderServiceImpl implements OrderService{
 	private OrderDao orderRepository;
 
 	@Override
-	public void processOrder(Order order, OrderStatus orderStatus) {
+	public void setOrderStatus(String orderNum, OrderStatus orderStatus) {
+		Order order = this.orderRepository.getOrderByNumber(orderNum);
 		order.setOrderStatus(orderStatus);
 		this.orderRepository.save(order);
 	}
 
 	@Override
 	public List<Order> getOrderByUser(User user) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.orderRepository.getOrdersByUser(user);
 	}
 
 	@Override
 	public List<Order> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.orderRepository.findAll();
 	}
 
 	@Override
-	public Order save(Order order) {
-		// TODO Auto-generated method stub
-		return null;
+	public void save(Order order) {
+		this.orderRepository.save(order);;
 	}
 
 	@Override
 	public List<Order> getOrdersByStatus(OrderStatus status) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.orderRepository.getOrderByStatus(status);
 	}
 
 	@Override
-	public Order findPropertyById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Order findOrderById(Long id) {
+		return this.orderRepository.getOrderById(id);
 	}
 
 	@Override
-	public Order findPropertyByNumber(String orderNumber) {
-		// TODO Auto-generated method stub
-		return null;
+	public Order findOrderByNumber(String orderNumber) {
+		return this.orderRepository.getOrderByNumber(orderNumber);
 	}
 
 	@Override
 	public void delete(Long id) {
-		// TODO Auto-generated method stub
-		
+		this.orderRepository.delete(id);
 	}
-	
-//	public void processOrder(String productId, long quantity) {
-//		Menu productById = productRepository.getProductByProductId(productId);
-//		
-// //		productById.setUnitsInStock(productById.getUnitsInStock() - quantity);
-//	}
 }

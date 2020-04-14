@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Version;
 
 @Entity
@@ -23,6 +24,10 @@ public class OrderItem {
 
 	@Column
 	private int quantity;
+
+	@Column
+	@OneToOne
+	private Item item;
 
 	@ManyToOne
 	private Order order;
@@ -57,6 +62,14 @@ public class OrderItem {
 
 	public void setOrder(Order order) {
 		this.order = order;
+	}
+	
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
 	}
 
 }

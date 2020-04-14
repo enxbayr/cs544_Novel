@@ -1,5 +1,6 @@
 package edu.mum.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -20,7 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.mum.domain.Menu;
-import edu.mum.service.ProductService;
+import edu.mum.domain.Order;
+import edu.mum.domain.OrderItem;
+import edu.mum.service.OrderItemService;
+import edu.mum.service.OrderService;
 
 @RestController
 @RequestMapping("/orders")
@@ -28,31 +32,30 @@ public class OrderController {
 	
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	private OrderItemService orderItemService;
  
  	@RequestMapping("")
-	public List<Menu> list(Model model) {
-		return  productService.getAllProducts();
- 
+	public List<Order> list(Model model) {
+		return  orderService.getAll();
 	}
 	
  	@RequestMapping("/{id}")
-	public Menu getProductById( @PathVariable("id") Long productId) {
+	public Order getOrderById( @PathVariable("id") String orderNum) {
 
-		return productService.get(productId);
+		return orderService.findOrderByNumber(orderNum);
  	}
-
- 	@RequestMapping("/{id}/category")
-	public Menu getByIdWithCategory( @PathVariable("id") Long productId) {
-
-		return productService.getWithCategory(productId);
- 	}
-
 	   
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
-	public void processAddNewProductForm(@RequestBody Menu productToBeAdded ) {
-
-			productService.addProduct(productToBeAdded);
+	public void addNewOrder(@RequestBody List<OrderItem> orderItems) {
+			Order orderToBeAdded = new Order();
+			orderToBeAdded.setItems(orderItems);
+			orderToBeAdded.setOrderNumber(edu.mum.utils.NumberGenerator.getTimeStamp());
+			orderToBeAdded.setUser(user);
+			
+			orderService.save(orderToBeAdded);
  
 	}
 	

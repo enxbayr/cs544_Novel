@@ -6,5 +6,5 @@ import edu.mum.domain.OrderItem;
 
 public interface OrderItemDao extends GenericDao<OrderItem> {
 	public OrderItem getOrderById(Long id);
-	public List<OrderItem> getOrderItemByOrder(Order order);
+	public List<OrderItem> getOrderItemByOrder(Long id);
 }
