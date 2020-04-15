@@ -7,57 +7,41 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
 @Entity
 @Table(name = "Order")
 public class Order {
-	  @Id
-	   @GeneratedValue(strategy = GenerationType.IDENTITY)
-	   @Column(name = "id", updatable = false, nullable = false)
-	   private Long id = null;
-	   @Version
-	   @Column(name = "version")
-	   private int version = 0;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", updatable = false, nullable = false)
+	private Long id = null;
+	@Version
+	@Column(name = "version")
+	private int version = 0;
 
-	   @Column
-	   private String orderNumber;
-	   
-	   public OrderStatus getOrderStatus() {
-		return orderStatus;
-	}
+	private String orderNumber;
 
-	public LocalDate getOrderDate() {
-		return orderDate;
-	}
+	@Enumerated(EnumType.STRING)
+	private OrderStatus orderStatus;
 
-	public void setOrderStatus(OrderStatus orderStatus) {
-		this.orderStatus = orderStatus;
-	}
+	private LocalDate orderDate;
 
-	public void setOrderDate(LocalDate orderDate) {
-		this.orderDate = orderDate;
-	}
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	private User user;
 
-	@Column
-	   private OrderStatus orderStatus;
-	   
-	   @Column
-	   private LocalDate orderDate;
-	   
-	   @Column
-	   @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	   private User user;
-
-	   @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	   private List<OrderItem> items = new ArrayList<OrderItem>();
+	@OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	private List<OrderItem> items = new ArrayList<OrderItem>();
 
 	public Long getId() {
 		return id;
@@ -75,6 +59,22 @@ public class Order {
 		this.version = version;
 	}
 
+	public OrderStatus getOrderStatus() {
+		return orderStatus;
+	}
+
+	public LocalDate getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderStatus(OrderStatus orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+
+	public void setOrderDate(LocalDate orderDate) {
+		this.orderDate = orderDate;
+	}
+	
 	public String getOrderNumber() {
 		return orderNumber;
 	}
@@ -90,7 +90,7 @@ public class Order {
 	public void setItems(List<OrderItem> items) {
 		this.items = items;
 	}
-	
+
 	public void addOrderItem(OrderItem orderItem) {
 		this.items.add(orderItem);
 		orderItem.setOrder(this);

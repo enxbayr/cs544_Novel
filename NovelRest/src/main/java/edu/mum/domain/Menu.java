@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -27,10 +30,14 @@ public class Menu implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
-	private LocalDate startDate;
-	private LocalDate endDate;
-	private Frequence frequence;
 	
+	private LocalDate startDate;
+	
+	private LocalDate endDate;
+	
+	@Enumerated(EnumType.STRING)
+	private Frequence frequence;
+		
 	@OneToMany
 	private List<Item> items;
 	

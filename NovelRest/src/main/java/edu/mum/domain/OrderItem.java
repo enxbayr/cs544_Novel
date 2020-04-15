@@ -25,7 +25,6 @@ public class OrderItem {
 	@Column
 	private int quantity;
 
-	@Column
 	@OneToOne
 	private Item item;
 
