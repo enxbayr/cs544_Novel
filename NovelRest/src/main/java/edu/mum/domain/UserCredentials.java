@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -27,6 +29,9 @@ public class UserCredentials {
 	String verifyPassword;
 	Boolean enabled;
 
+	@Enumerated(EnumType.STRING)
+	private UserRole userRole;
+	
 	@OneToOne(mappedBy = "userCredentials", cascade = CascadeType.PERSIST)
 	private User user;
 
@@ -80,6 +85,14 @@ public class UserCredentials {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public UserRole getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
 	}
 
 }

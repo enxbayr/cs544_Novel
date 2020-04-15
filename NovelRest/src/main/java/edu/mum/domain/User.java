@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -52,7 +54,7 @@ public class User {
 
 	@Email(message = "{EmailValid}")
 	private String email;
-
+	
 	@NotNull(message = "{NotNull}")
 	private Integer userNumber;
 
@@ -145,5 +147,4 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 }

@@ -1,5 +1,5 @@
 package edu.mum.domain;
 
-public class UserRole {
-
+public enum UserRole {
+	STUDENT, FACULTY, STAFF, ADMIN;
 }

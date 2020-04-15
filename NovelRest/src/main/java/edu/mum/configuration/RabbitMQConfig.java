@@ -19,38 +19,38 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 	
-//	@Value("${spring.rabbitmq.host}")
-//	private String hostname;
-//	
-//	@Value("${spring.rabbitmq.port}")
-//	private String port;
-//
-//	@Value("${spring.rabbitmq.username}")
-//	private String username;
-//	
-//	@Value("${spring.rabbitmq.password}")
-//	private String password;
-//	
-//	@Value("${rabbitmq.exchange}")
-//	private String exchange;
-//
-//	@Value("${rabbitmq.queue.faculty}")
-//	private String orderQueueFaculty;
-//
-//	@Value("${rabbitmq.queue.student}")
-//	private String orderQueueStudent;
-//	
-//	@Value("${rabbitmq.routingkey.faculty}")
-//	private String keyFaculty;
-//
-//	@Value("${rabbitmq.routingkey.student}")
-//	private String keyStudent;
+	@Value("${spring.rabbitmq.host}")
+	private String hostname;
+	
+	@Value("${spring.rabbitmq.port}")
+	private String port;
+
+	@Value("${spring.rabbitmq.username}")
+	private String username;
+	
+	@Value("${spring.rabbitmq.password}")
+	private String password;
+	
+	@Value("${rabbitmq.exchange}")
+	private String exchange;
+
+	@Value("${rabbitmq.queue.faculty}")
+	private String orderQueueFaculty;
+
+	@Value("${rabbitmq.queue.student}")
+	private String orderQueueStudent;
+	
+	@Value("${rabbitmq.routingkey.faculty}")
+	private String keyFaculty;
+
+	@Value("${rabbitmq.routingkey.student}")
+	private String keyStudent;
 	
 	@Bean
 	public ConnectionFactory connectionFactory() {
-		CachingConnectionFactory connectionFactory = new CachingConnectionFactory("localhost");
-		connectionFactory.setUsername("guest");
-		connectionFactory.setPassword("guest");
+		CachingConnectionFactory connectionFactory = new CachingConnectionFactory(hostname);
+		connectionFactory.setUsername(username);
+		connectionFactory.setPassword(password);
 		return connectionFactory;
 	}
 
@@ -61,21 +61,21 @@ public class RabbitMQConfig {
 
 	@Bean
 	public List<Declarable> orderDirectExchangeBindings() {
-		Queue orderQueueFaculty = new Queue("orderStoreQueue", true);
-		Queue orderQueueStudent = new Queue("orderOnlineQueue", true);
-		DirectExchange orderDirectExchange = new DirectExchange("orderDirectExchange");
+		Queue queueFaculty = new Queue(orderQueueFaculty, true);
+		Queue queueStudent = new Queue(orderQueueStudent, true);
+		DirectExchange orderDirectExchange = new DirectExchange(exchange);
 
-		List<Declarable> bindingList = Arrays.<Declarable>asList(orderQueueFaculty, orderQueueStudent, orderDirectExchange,
-				BindingBuilder.bind(orderQueueFaculty).to(orderDirectExchange).with("order.store"),
-				BindingBuilder.bind(orderQueueStudent).to(orderDirectExchange).with("order.online"));
+		List<Declarable> bindingList = Arrays.<Declarable>asList(queueFaculty, queueStudent, orderDirectExchange,
+				BindingBuilder.bind(queueFaculty).to(orderDirectExchange).with(keyFaculty),
+				BindingBuilder.bind(queueStudent).to(orderDirectExchange).with(keyStudent));
 		return bindingList;
 	}
 
 	@Bean
 	public RabbitTemplate orderFacultyTemplate() {
 		RabbitTemplate orderFacultyTemplate = new RabbitTemplate(connectionFactory());
-		orderFacultyTemplate.setRoutingKey("order.store");
-		orderFacultyTemplate.setExchange("orderDirectExchange");
+		orderFacultyTemplate.setRoutingKey(keyFaculty);
+		orderFacultyTemplate.setExchange(exchange);
 		orderFacultyTemplate.setReplyTimeout(2000);
 		return orderFacultyTemplate;
 	}
@@ -83,8 +83,8 @@ public class RabbitMQConfig {
 	@Bean
 	public RabbitTemplate orderStudentTemplate() {
 		RabbitTemplate orderStudentTemplate = new RabbitTemplate(connectionFactory());
-		orderStudentTemplate.setRoutingKey("order.online");
-		orderStudentTemplate.setExchange("orderDirectExchange");
+		orderStudentTemplate.setRoutingKey(keyStudent);
+		orderStudentTemplate.setExchange(exchange);
 		orderStudentTemplate.setReplyTimeout(2000);
 		return orderStudentTemplate;
 	}

@@ -1,5 +1,5 @@
 package edu.mum.domain;
 
 public enum OrderStatus {
-	ORDERED, COMFIRMED, PREPARING, WAITING, DELVERED;
+	ORDERED, COMFIRMED, PREPARING, WAITING, DELIVERED;
 }
