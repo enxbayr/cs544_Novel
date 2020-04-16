@@ -10,7 +10,7 @@ public interface MemberService {
 
 	public void update(Member member);
 
-	public void saveFull(Member member);
+	public Member saveFull(Member member);
 
 	public List<Member> findAll();
 
@@ -19,5 +19,7 @@ public interface MemberService {
 	public Member findOne(Long id);
 
 	public Member findOneFull(Long id);
+
+	public Member findByUserName(String uname);
 
 }

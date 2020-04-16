@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.mum.dao.MemberDao;
 import edu.mum.domain.Member;
+import edu.mum.service.AddressService;
 import edu.mum.service.MemberService;
 import edu.mum.service.UserCredentialsService;
 
@@ -21,6 +22,9 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	UserCredentialsService credentialsService;
 
+	@Autowired
+	AddressService addressService;
+
 	public void save(Member member) {
 		memberDao.save(member);
 	}
@@ -30,9 +34,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void saveFull(Member member) {
+	public Member saveFull(Member member) {
 		credentialsService.save(member.getUserCredentials());
+		addressService.save(member.getAddress());
 		memberDao.save(member);
+		return member;
 	}
 
 	public List<Member> findAll() {
@@ -57,4 +63,8 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.findByUserNumber(memberId);
 	}
 
+	@Override
+	public Member findByUserName(String uname) {
+		return memberDao.findByUserName(uname);
+	}
 }
