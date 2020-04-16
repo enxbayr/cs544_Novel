@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,12 +27,16 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.mum.amqp.OrderMQService;
+import edu.mum.config.JwtTokenUtil;
 import edu.mum.domain.Orders;
+import edu.mum.domain.MailUser;
 import edu.mum.domain.OrderItem;
 import edu.mum.domain.OrderStatus;
 import edu.mum.domain.UserRole;
 import edu.mum.service.OrderItemService;
 import edu.mum.service.OrderService;
+import edu.mum.utils.MailSender;
+import io.jsonwebtoken.ExpiredJwtException;
 
 @RestController
 @RequestMapping("/orders")
@@ -45,6 +50,9 @@ public class OrderController {
 
 	@Autowired
 	private OrderItemService orderItemService;
+	
+	@Autowired
+	JwtTokenUtil jwtTokenUtil;
 
 	@RequestMapping("")
 	public List<Orders> list(Model model) {
@@ -53,18 +61,32 @@ public class OrderController {
 
 	@RequestMapping("/{id}")
 	public Orders getOrderById(@PathVariable("id") String orderNum) {
-
 		return orderService.findOrderByNumber(orderNum);
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<HttpStatus> addNewOrder(@RequestBody List<OrderItem> orderItems) {
+	public ResponseEntity<HttpStatus> addNewOrder(@RequestHeader("Authentication") String reqToken, @RequestBody List<OrderItem> orderItems) {
 		try {
+			String jwtToken = "";
+			String username = "";
+			if (reqToken != null && reqToken.startsWith("Bearer ")) {
+				jwtToken = reqToken.substring(7);
+				try {
+					username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+				} catch (IllegalArgumentException e) {
+					System.out.println("Unable to get JWT Token");
+				} catch (ExpiredJwtException e) {
+					System.out.println("JWT Token has expired");
+				}
+			} else {
+				System.out.println("JWT Token does not begin with Bearer String");
+			}
+			
 			Orders orderToBeAdded = new Orders();
 			orderToBeAdded.setItems(orderItems);
 			orderToBeAdded.setOrderNumber(edu.mum.utils.NumberGenerator.getTimeStamp());
-			// orderToBeAdded.setUser();
+			//orderToBeAdded.setUser();
 			orderService.save(orderToBeAdded);
 		} catch (Exception e) {
 			return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
@@ -83,7 +105,13 @@ public class OrderController {
 				orderMQService.publish(UserRole.STUDENT, tmpOrder);
 		if (orderStatus == OrderStatus.DELIVERED) {
 			//Send mail
+			MailUser reciever = new MailUser();
+			reciever.setFirstName(tmpOrder.getUser().getFirstName());
+			reciever.setLastName(tmpOrder.getUser().getLastName());
+			reciever.setEmailAddress(tmpOrder.getUser().getEmail());
+			reciever.setOrderNumber(orderNumber);
 			
+			MailSender.mailSender(reciever);
 		}	
 		
 		return ResponseEntity.ok(HttpStatus.OK);
