@@ -7,13 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.mum.dao.OrderDao;
-import edu.mum.domain.Member;
 import edu.mum.domain.Orders;
 import edu.mum.domain.OrderStatus;
+import edu.mum.domain.Member;
 import edu.mum.service.OrderService;
 
 @Service
-public class OrderServiceImpl implements OrderService {
+public class OrderServiceImpl implements OrderService{
 
 	@Autowired
 	private OrderDao orderRepository;
@@ -26,8 +26,8 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<Orders> getOrderByUser(Member member) {
-		return this.orderRepository.getOrdersByMember(member);
+	public List<Orders> getOrderByUser(Member user) {
+		return this.orderRepository.getOrdersByUser(user);
 	}
 
 	@Override
@@ -37,8 +37,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public void save(Orders order) {
-		this.orderRepository.save(order);
-		;
+		this.orderRepository.save(order);;
 	}
 
 	@Override

@@ -10,7 +10,7 @@ import edu.mum.domain.OrderItem;
 import edu.mum.service.OrderItemService;
 
 @Service
-public class OrderItemServiceImpl implements OrderItemService {
+public class OrderItemServiceImpl implements OrderItemService{
 
 	@Autowired
 	private OrderItemDao orderItemRepository;
@@ -33,7 +33,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 	@Override
 	public void delete(Long id) {
 		this.orderItemRepository.delete(id);
-
+		
 	}
-
+	
 }

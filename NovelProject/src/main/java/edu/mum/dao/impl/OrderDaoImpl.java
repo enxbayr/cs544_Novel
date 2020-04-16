@@ -7,8 +7,8 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
-import edu.mum.domain.Orders;
 import edu.mum.domain.Member;
+import edu.mum.domain.Orders;
 import edu.mum.domain.OrderStatus;
 import edu.mum.dao.OrderDao;
 
@@ -38,7 +38,7 @@ public class OrderDaoImpl extends GenericDaoImpl<Orders> implements OrderDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Orders> getOrdersByMember(Member user) {
+	public List<Orders> getOrdersByUser(Member user) {
 
 		Query query = entityManager.createQuery("select p from Order p where p.user = :user");
 

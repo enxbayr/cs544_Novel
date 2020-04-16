@@ -37,7 +37,7 @@ public class Orders {
 	private LocalDate orderDate;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	private Member member;
+	private Member user;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private List<OrderItem> items = new ArrayList<OrderItem>();
@@ -73,7 +73,7 @@ public class Orders {
 	public void setOrderDate(LocalDate orderDate) {
 		this.orderDate = orderDate;
 	}
-
+	
 	public String getOrderNumber() {
 		return orderNumber;
 	}
@@ -92,15 +92,15 @@ public class Orders {
 
 	public void addOrderItem(OrderItem orderItem) {
 		this.items.add(orderItem);
-		// orderItem.setOrder(this);
+		//orderItem.setOrder(this);
 	}
 
-	public Member getMember() {
-		return member;
+	public Member getUser() {
+		return user;
 	}
 
-	public void setMember(Member member) {
-		this.member = member;
+	public void setUser(Member user) {
+		this.user = user;
 	}
 
 }

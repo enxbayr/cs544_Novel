@@ -1,9 +1,8 @@
 package edu.mum.amqp;
 
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-
 import edu.mum.domain.Orders;
+import edu.mum.domain.UserRole;
 
 public interface OrderMQService {
-	public void publish(RabbitTemplate rabbitTemplate, Orders order);
+    public void publish(UserRole role, Orders order);
 }

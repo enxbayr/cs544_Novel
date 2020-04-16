@@ -6,7 +6,9 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,16 +25,20 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import edu.mum.domain.Menu;
+import edu.mum.amqp.OrderMQService;
 import edu.mum.domain.Orders;
 import edu.mum.domain.OrderItem;
 import edu.mum.domain.OrderStatus;
+import edu.mum.domain.UserRole;
 import edu.mum.service.OrderItemService;
 import edu.mum.service.OrderService;
 
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
+	
+	@Autowired
+	private OrderMQService orderMQService;
 
 	@Autowired
 	private OrderService orderService;
@@ -73,9 +79,13 @@ public class OrderController {
 		Orders tmpOrder = this.orderService.findOrderByNumber(orderNumber);
 		tmpOrder.setOrderStatus(orderStatus);
 		this.orderService.save(tmpOrder);
-		if (orderStatus == OrderStatus.COMFIRMED) {
-
-		}
+		if (orderStatus == OrderStatus.COMFIRMED)
+				orderMQService.publish(UserRole.STUDENT, tmpOrder);
+		if (orderStatus == OrderStatus.DELIVERED) {
+			//Send mail
+			
+		}	
+		
 		return ResponseEntity.ok(HttpStatus.OK);
 	}
 
