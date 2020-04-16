@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -23,16 +24,12 @@ public class Address {
 	private String city;	
  	private String state;
   	private String zipCode;
-
-  	@ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn (name="member_id") 
-  	private User  member;
   	
 	public long getId() {
 		return id;
 	}
 	public void setId(long id) {
-		id = id;
+		this.id = id;
 	}
 	public String getStreet() {
 		return street;
@@ -58,12 +55,4 @@ public class Address {
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
 	}
-	public User getMember() {
-		return member;
-	}
-	public void setMember(User member) {
-		this.member = member;
-	}
-	
-	
 }

@@ -20,8 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 @Entity
-@Table(name = "Order")
-public class Order {
+public class Orders {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", updatable = false, nullable = false)
@@ -40,7 +39,7 @@ public class Order {
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private User user;
 
-	@OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private List<OrderItem> items = new ArrayList<OrderItem>();
 
 	public Long getId() {
@@ -93,7 +92,7 @@ public class Order {
 
 	public void addOrderItem(OrderItem orderItem) {
 		this.items.add(orderItem);
-		orderItem.setOrder(this);
+		//orderItem.setOrder(this);
 	}
 
 	public User getUser() {

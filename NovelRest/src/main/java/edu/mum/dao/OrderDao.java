@@ -2,16 +2,16 @@ package edu.mum.dao;
 
 import java.time.LocalDate;
 import java.util.List;
-import edu.mum.domain.Order;
+import edu.mum.domain.Orders;
 import edu.mum.domain.OrderStatus;
 import edu.mum.domain.User;
 
-	public interface OrderDao extends GenericDao<Order>  
+	public interface OrderDao extends GenericDao<Orders>  
 	{
-		public Order getOrderById(Long id);
-		public Order getOrderByNumber(String orderNum);
-		public List<Order> getOrderByStatus(OrderStatus orderStatus);
-		public List<Order> getOrdersByDate(LocalDate startDate, LocalDate endDate);
-		public List<Order> getOrdersByUser(User user);
+		public Orders getOrderById(Long id);
+		public Orders getOrderByNumber(String orderNum);
+		public List<Orders> getOrderByStatus(OrderStatus orderStatus);
+		public List<Orders> getOrdersByDate(LocalDate startDate, LocalDate endDate);
+		public List<Orders> getOrdersByUser(User user);
  	}
 

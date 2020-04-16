@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import edu.mum.dao.UserDao;
 import edu.mum.domain.User;
-import edu.mum.domain.Order;
+import edu.mum.domain.Orders;
 
 @SuppressWarnings("unchecked")
 @Repository

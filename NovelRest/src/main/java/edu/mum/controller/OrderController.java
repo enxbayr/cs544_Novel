@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.mum.amqp.OrderMQService;
-import edu.mum.domain.Order;
+import edu.mum.domain.Orders;
 import edu.mum.domain.OrderItem;
 import edu.mum.domain.OrderStatus;
 import edu.mum.domain.UserRole;
@@ -47,12 +47,12 @@ public class OrderController {
 	private OrderItemService orderItemService;
 
 	@RequestMapping("")
-	public List<Order> list(Model model) {
+	public List<Orders> list(Model model) {
 		return orderService.getAll();
 	}
 
 	@RequestMapping("/{id}")
-	public Order getOrderById(@PathVariable("id") String orderNum) {
+	public Orders getOrderById(@PathVariable("id") String orderNum) {
 
 		return orderService.findOrderByNumber(orderNum);
 	}
@@ -61,7 +61,7 @@ public class OrderController {
 	@ResponseBody
 	public ResponseEntity<HttpStatus> addNewOrder(@RequestBody List<OrderItem> orderItems) {
 		try {
-			Order orderToBeAdded = new Order();
+			Orders orderToBeAdded = new Orders();
 			orderToBeAdded.setItems(orderItems);
 			orderToBeAdded.setOrderNumber(edu.mum.utils.NumberGenerator.getTimeStamp());
 			// orderToBeAdded.setUser();
@@ -76,20 +76,22 @@ public class OrderController {
 	@ResponseBody
 	public ResponseEntity<HttpStatus> setOrderStatus(@RequestParam("action") OrderStatus orderStatus,
 			@RequestParam("orderNumber") String orderNumber) {
-		Order tmpOrder = this.orderService.findOrderByNumber(orderNumber);
+		Orders tmpOrder = this.orderService.findOrderByNumber(orderNumber);
 		tmpOrder.setOrderStatus(orderStatus);
 		this.orderService.save(tmpOrder);
 		if (orderStatus == OrderStatus.COMFIRMED)
 				orderMQService.publish(UserRole.STUDENT, tmpOrder);
-		if (orderStatus == OrderStatus.DELIVERED);
+		if (orderStatus == OrderStatus.DELIVERED) {
+			//Send mail
 			
+		}	
 		
 		return ResponseEntity.ok(HttpStatus.OK);
 	}
 
 	// Comment added
 	@RequestMapping(value = "/report", method = RequestMethod.GET)
-	public List<Order> getReportByDate(@RequestParam("startDate") LocalDate startDate,
+	public List<Orders> getReportByDate(@RequestParam("startDate") LocalDate startDate,
 			@RequestParam("endDate") LocalDate endDate) {
 		return this.orderService.reportOrderByDate(startDate, endDate);
 	}

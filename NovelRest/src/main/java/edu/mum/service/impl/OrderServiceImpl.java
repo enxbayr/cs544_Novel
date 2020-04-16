@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.mum.dao.OrderDao;
-import edu.mum.domain.Order;
+import edu.mum.domain.Orders;
 import edu.mum.domain.OrderStatus;
 import edu.mum.domain.User;
 import edu.mum.service.OrderService;
@@ -20,38 +20,38 @@ public class OrderServiceImpl implements OrderService{
 
 	@Override
 	public void setOrderStatus(String orderNum, OrderStatus orderStatus) {
-		Order order = this.orderRepository.getOrderByNumber(orderNum);
+		Orders order = this.orderRepository.getOrderByNumber(orderNum);
 		order.setOrderStatus(orderStatus);
 		this.orderRepository.save(order);
 	}
 
 	@Override
-	public List<Order> getOrderByUser(User user) {
+	public List<Orders> getOrderByUser(User user) {
 		return this.orderRepository.getOrdersByUser(user);
 	}
 
 	@Override
-	public List<Order> getAll() {
+	public List<Orders> getAll() {
 		return this.orderRepository.findAll();
 	}
 
 	@Override
-	public void save(Order order) {
+	public void save(Orders order) {
 		this.orderRepository.save(order);;
 	}
 
 	@Override
-	public List<Order> getOrdersByStatus(OrderStatus status) {
+	public List<Orders> getOrdersByStatus(OrderStatus status) {
 		return this.orderRepository.getOrderByStatus(status);
 	}
 
 	@Override
-	public Order findOrderById(Long id) {
+	public Orders findOrderById(Long id) {
 		return this.orderRepository.getOrderById(id);
 	}
 
 	@Override
-	public Order findOrderByNumber(String orderNumber) {
+	public Orders findOrderByNumber(String orderNumber) {
 		return this.orderRepository.getOrderByNumber(orderNumber);
 	}
 
@@ -61,7 +61,7 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
-	public List<Order> reportOrderByDate(LocalDate startDate, LocalDate endDate) {
+	public List<Orders> reportOrderByDate(LocalDate startDate, LocalDate endDate) {
 		return this.orderRepository.getOrdersByDate(startDate, endDate);
 	}
 }
