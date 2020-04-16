@@ -44,6 +44,12 @@ public class MemberController {
 
 	}
 
+	@RequestMapping("/{name}")
+	public Member getMemberByUserName(@PathVariable("name") String uname) {
+		return memberService.findByUserName(uname);
+
+	}
+
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public void processAddNewMemberForm(@RequestBody Member memberToBeAdded) {

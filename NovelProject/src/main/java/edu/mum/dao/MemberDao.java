@@ -12,4 +12,6 @@ public interface MemberDao extends GenericDao<Member> {
 
 	public List<Member> findByGraph();
 
+	public Member findByUserName(String uname);
+
 }

@@ -42,4 +42,12 @@ public class MemberDaoImpl extends GenericDaoImpl<Member> implements MemberDao {
 
 	}
 
+	@Override
+	public Member findByUserName(String uname) {
+
+		Query query = entityManager.createQuery("select m from User m , CREDENTIALS c  where c.username =:userName");
+		return (Member) query.setParameter("userName", uname).getSingleResult();
+
+	}
+
 }

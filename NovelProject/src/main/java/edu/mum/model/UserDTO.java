@@ -2,7 +2,20 @@ package edu.mum.model;
 
 public class UserDTO {
 	private String username;
+
 	private String password;
+
+	private String firstName;
+
+	private String lastName;
+
+	private String email;
+
+	private Integer memberNumber;
+
+	private String buildingNumber;
+
+	private String roomNumber;
 
 	public String getUsername() {
 		return username;
@@ -19,4 +32,53 @@ public class UserDTO {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Integer getMemberNumber() {
+		return memberNumber;
+	}
+
+	public void setMemberNumber(Integer memberNumber) {
+		this.memberNumber = memberNumber;
+	}
+
+	public String getBuildingNumber() {
+		return buildingNumber;
+	}
+
+	public void setBuildingNumber(String buildingNumber) {
+		this.buildingNumber = buildingNumber;
+	}
+
+	public String getRoomNumber() {
+		return roomNumber;
+	}
+
+	public void setRoomNumber(String roomNumber) {
+		this.roomNumber = roomNumber;
+	}
+
 }
