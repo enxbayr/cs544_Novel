@@ -33,6 +33,7 @@ import edu.mum.domain.MailUser;
 import edu.mum.domain.OrderItem;
 import edu.mum.domain.OrderStatus;
 import edu.mum.domain.UserRole;
+import edu.mum.service.MemberService;
 import edu.mum.service.OrderItemService;
 import edu.mum.service.OrderService;
 import edu.mum.utils.MailSender;
@@ -49,7 +50,7 @@ public class OrderController {
 	private OrderService orderService;
 
 	@Autowired
-	private OrderItemService orderItemService;
+	private MemberService memberService;
 	
 	@Autowired
 	JwtTokenUtil jwtTokenUtil;
@@ -66,27 +67,18 @@ public class OrderController {
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<HttpStatus> addNewOrder(@RequestHeader("Authentication") String reqToken, @RequestBody List<OrderItem> orderItems) {
+	public ResponseEntity<HttpStatus> addNewOrder(@RequestHeader("Authorization") String reqToken, @RequestBody List<OrderItem> orderItems) {
 		try {
 			String jwtToken = "";
 			String username = "";
-			if (reqToken != null && reqToken.startsWith("Bearer ")) {
-				jwtToken = reqToken.substring(7);
-				try {
-					username = jwtTokenUtil.getUsernameFromToken(jwtToken);
-				} catch (IllegalArgumentException e) {
-					System.out.println("Unable to get JWT Token");
-				} catch (ExpiredJwtException e) {
-					System.out.println("JWT Token has expired");
-				}
-			} else {
-				System.out.println("JWT Token does not begin with Bearer String");
-			}
+			
+			jwtToken = reqToken.substring(7);
+			username = jwtTokenUtil.getUsernameFromToken(jwtToken);
 			
 			Orders orderToBeAdded = new Orders();
 			orderToBeAdded.setItems(orderItems);
 			orderToBeAdded.setOrderNumber(edu.mum.utils.NumberGenerator.getTimeStamp());
-			//orderToBeAdded.setUser();
+			orderToBeAdded.setUser(memberService.findByUserName(username));
 			orderService.save(orderToBeAdded);
 		} catch (Exception e) {
 			return ResponseEntity.ok(HttpStatus.BAD_REQUEST);

@@ -35,8 +35,8 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public Member saveFull(Member member) {
-		credentialsService.save(member.getUserCredentials());
-		addressService.save(member.getAddress());
+		//credentialsService.save(member.getUserCredentials());
+		//addressService.save(member.getAddress());
 		memberDao.save(member);
 		return member;
 	}

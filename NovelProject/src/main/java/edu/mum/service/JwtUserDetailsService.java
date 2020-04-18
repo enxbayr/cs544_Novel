@@ -25,28 +25,18 @@ public class JwtUserDetailsService implements UserDetailsService {
 //	@Autowired
 //	private UserDao userDao;
 
-	@Autowired
-	private MemberService memberService;
+//	@Autowired
+//	private MemberService memberService;
 
 	@Autowired
-	private UserCredentialsDao credentialsDao;
+	private UserDao credentialsDao;
 
 	@Autowired
 	private PasswordEncoder bcryptEncoder;
 
-//	@Override
-//	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//		DAOUser user = userDao.findByUsername(username);
-//		if (user == null) {
-//			throw new UsernameNotFoundException("User not found with username: " + username);
-//		}
-//		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-//				new ArrayList<>());
-//	}
-
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		UserCredentials user = credentialsDao.findByUserName(username);
+		DAOUser user = credentialsDao.findByUsername(username);
 		if (user == null) {
 			throw new UsernameNotFoundException("User not found with username: " + username);
 		}
@@ -54,34 +44,22 @@ public class JwtUserDetailsService implements UserDetailsService {
 				new ArrayList<>());
 	}
 
-	public UserCredentials save(UserDTO user) {
+//	@Override
+//	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//		UserCredentials user = credentialsDao.findByUsername(username);
+//		if (user == null) {
+//			throw new UsernameNotFoundException("User not found with username: " + username);
+//		}
+//		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+//				new ArrayList<>());
+//	}
 
-		UserCredentials newUser = new UserCredentials();
+	
+
+	public DAOUser save(UserDTO user) {
+		DAOUser newUser = new DAOUser();
 		newUser.setUsername(user.getUsername());
 		newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
-
-		Address adr = new Address();
-		adr.setBuildingNumber(user.getBuildingNumber());
-		adr.setRoomNumber(user.getRoomNumber());
-
-		Member newMember = new Member();
-		newMember.setFirstName(user.getFirstName());
-		newMember.setLastName(user.getLastName());
-		newMember.setEmail(user.getEmail());
-		newMember.setMemberNumber(user.getMemberNumber());
-		newMember.setUserCredentials(newUser);
-		newMember.setAddress(adr);
-
-		memberService.saveFull(newMember);
-
-		return newUser;
-
+		return credentialsDao.save(newUser);
 	}
-
-//	public DAOUser save(UserDTO user) {
-//		DAOUser newUser = new DAOUser();
-//		newUser.setUsername(user.getUsername());
-//		newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
-//		return userDao.save(newUser);
-//	}
 }

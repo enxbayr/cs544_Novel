@@ -28,7 +28,7 @@ public class Orders {
 	@Version
 	@Column(name = "version")
 	private int version = 0;
-
+	
 	private String orderNumber;
 
 	@Enumerated(EnumType.STRING)

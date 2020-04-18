@@ -28,8 +28,8 @@ public class OrderItem {
 	@OneToOne
 	private Item item;
 
-	@ManyToOne
-	private Orders order;
+//	@ManyToOne
+//	private Orders order;
 
 	public Long getId() {
 		return id;
@@ -56,13 +56,13 @@ public class OrderItem {
 
 	}
 
-	public Orders getOrder() {
-		return order;
-	}
-
-	public void setOrder(Orders order) {
-		this.order = order;
-	}
+//	public Orders getOrder() {
+//		return order;
+//	}
+//
+//	public void setOrder(Orders order) {
+//		this.order = order;
+//	}
 	
 	public Item getItem() {
 		return item;

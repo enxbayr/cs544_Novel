@@ -16,19 +16,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
-
 public class Member {
 
 	@Id
@@ -36,7 +34,7 @@ public class Member {
 	private long id;
 
 	@Column(length = 16)
-	@NotEmpty(message = "{NotEmpty}")
+	//@NotEmpty(message = "{NotEmpty}")
 	private String firstName;
 
 	@Column(length = 16)
@@ -49,7 +47,7 @@ public class Member {
 
 	private LocalDate dob;
 
-	@Email(message = "{EmailValid}")
+	@Email
 	private String email;
 
 	@NotNull(message = "{NotNull}")
