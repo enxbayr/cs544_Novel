@@ -33,14 +33,6 @@ public class MemberServiceImpl implements MemberService {
 		memberDao.save(member);
 	}
 
-	@Override
-	public Member saveFull(Member member) {
-		//credentialsService.save(member.getUserCredentials());
-		//addressService.save(member.getAddress());
-		memberDao.save(member);
-		return member;
-	}
-
 	public List<Member> findAll() {
 		return (List<Member>) memberDao.findAll();
 	}

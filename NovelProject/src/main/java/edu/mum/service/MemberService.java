@@ -9,9 +9,7 @@ public interface MemberService {
 	public void save(Member member);
 
 	public void update(Member member);
-
-	public Member saveFull(Member member);
-
+	
 	public List<Member> findAll();
 
 	public Member findByMemberNumber(Integer userId);

@@ -12,11 +12,14 @@ public class UserDTO {
 	private String email;
 
 	private Integer memberNumber;
+	
+	private String role;
 
 	private String buildingNumber;
 
 	private String roomNumber;
-
+	
+	
 	public String getUsername() {
 		return username;
 	}
@@ -63,6 +66,14 @@ public class UserDTO {
 
 	public void setMemberNumber(Integer memberNumber) {
 		this.memberNumber = memberNumber;
+	}
+	
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public String getBuildingNumber() {

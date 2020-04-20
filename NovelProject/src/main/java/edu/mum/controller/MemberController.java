@@ -1,5 +1,6 @@
 package edu.mum.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,6 +56,12 @@ public class MemberController {
 	public void processAddNewMemberForm(@RequestBody Member memberToBeAdded) {
 		memberService.save(memberToBeAdded);
 
+	}
+
+	@RequestMapping("/me")
+	public Principal user(Principal principal) {
+		System.out.println(principal);
+		return principal;
 	}
 
 }
